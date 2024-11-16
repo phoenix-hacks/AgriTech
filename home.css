@@ -1,0 +1,152 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #080808;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    display: flex;
+    height: 21rem;
+    margin: 0 auto;
+    max-width: 55vw;
+    width: 55vw;
+}
+
+.radio {
+    display: none;
+}
+
+.content {
+    position: relative;
+    flex: 1;
+    cursor: pointer;
+    border-radius: 3rem;
+    margin-right: 0.8rem;
+    overflow: hidden;
+    background: transparent;
+    background-image: url("");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.5s cubic-bezier(0.05, 0.60, 0.39, 0.94);
+}
+
+.content::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    background: inherit;
+}
+
+.content > * {
+    position: relative;
+    z-index: 1;
+}
+
+.content:hover {
+    box-shadow: 0.7rem 0.7rem 0.5rem rgba(0, 0, 0, 0.3);
+}
+
+.content:nth-of-type(2) {
+    background: transparent;
+    background-image: url("");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.content:nth-of-type(3) {
+    background: transparent;
+    background-image: url("");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.content:nth-of-type(4) {
+    background: transparent;
+    background-image: url("");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.card-title {
+    position: absolute;
+    bottom: 1.2rem;
+    left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    font-size: 1.2rem;
+    line-height: 1.1;
+    opacity: 0;
+    user-select: none;
+    white-space: nowrap;
+    transform: translateX(2rem);
+    transition: 290ms cubic-bezier(0.05, 0.62, 0.40, 0.95) 300ms;
+    transition-property: opacity, transform;
+}
+
+.title-card {
+    position: absolute;
+    top: 2rem;
+    left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    color: #000;
+    font-size: 1.2rem;
+    line-height: 1.1;
+    opacity: 0;
+    user-select: none;
+    white-space: nowrap;
+    transform: translateX(2rem);
+    transition: 290ms cubic-bezier(0.05, 0.60, 0.42, 0.94) 300ms;
+    transition-property: opacity, transform;
+
+}
+
+.subtitle {
+    font-size: 1rem;
+}
+
+.subsubtitle {
+    font-size: 0.85rem;
+}
+
+.paddT {
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.radio:checked + .content {
+    flex: 9;
+    border-radius: 2rem;
+    box-shadow: 0.3rem 0.3rem 0.4rem rgba(0, 0, 0, 0.3);
+}
+
+.radio:checked + .content > .card-title {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.radio:checked+.content>.title-card {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.marg-bott {
+    margin-bottom: 1.5rem;
+}
