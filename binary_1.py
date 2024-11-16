@@ -40,19 +40,19 @@ def load_dataset(image_dir, mask_dir, target_size=(128, 128)):
     
     return np.array(images), np.array(masks)
 
-# Load the dataset
+
 image_dir = 'C:\\Users\\GIRIDHAR\\OneDrive\\Desktop\\data\\images'
 mask_dir = 'C:\\Users\\GIRIDHAR\\OneDrive\\Desktop\\data\\masks'
 X, y = load_dataset(image_dir, mask_dir)
 
-# Print shapes for verification
+
 print(f"Images shape: {X.shape}")
 print(f"Masks shape: {y.shape}")
 
 def build_unet_model(input_shape=(128, 128, 3)):
     inputs = Input(input_shape)
     
-    # Encoder
+    
     c1 = Conv2D(32, (3, 3), activation='relu', padding='same')(inputs)
     p1 = MaxPooling2D((2, 2))(c1)
 
@@ -61,7 +61,7 @@ def build_unet_model(input_shape=(128, 128, 3)):
 
     c3 = Conv2D(128, (3, 3), activation='relu', padding='same')(p2)
     
-    # Decoder
+    
     u1 = Conv2DTranspose(64, (2, 2), strides=(2, 2), padding='same')(c3)
     u1 = concatenate([u1, c2])
 
@@ -72,17 +72,12 @@ def build_unet_model(input_shape=(128, 128, 3)):
     
     model = Model(inputs, outputs)
     return model
-
-# Build the model
 model = build_unet_model()
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.summary()
-
-# Split the dataset into training and validation sets
 from sklearn.model_selection import train_test_split
 X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Train the model
 history = model.fit(
     X_train, y_train,
     validation_data=(X_val, y_val),
@@ -102,28 +97,22 @@ plt.plot(history.history['loss'], label='Train Loss')
 plt.plot(history.history['val_loss'], label='Val Loss')
 plt.legend()
 plt.title('Loss')
-
 plt.show()
-# Load a new test image
 test_image_path = 'C:\\Users\\GIRIDHAR\\OneDrive\\Desktop\\data\\gautambudhnagar_img.jpeg'
 test_image = load_image(test_image_path)
 test_image = np.expand_dims(test_image, axis=0)  # Add batch dimension
 
-# Predict the mask
 predicted_mask = model.predict(test_image)[0]
 predicted_mask = (predicted_mask > 0.5).astype(np.uint8)
 
-# Visualize the original image and predicted mask
 plt.figure(figsize=(8, 4))
 plt.subplot(1, 2, 1)
 plt.imshow(cv2.imread(test_image_path)[:, :, ::-1])
 plt.title('Original Image')
-
 plt.subplot(1, 2, 2)
 plt.imshow(predicted_mask.squeeze(), cmap='gray')
 plt.title('Predicted Mask')
 plt.show()
-# Convert the predicted mask to 3 channels for saving as an image
 predicted_mask_rgb = np.stack((predicted_mask.squeeze(),)*3, axis=-1) * 255
 cv2.imwrite('output_predicted_mask.jpg', predicted_mask_rgb)
 print("Predicted mask saved as 'output_predicted_mask.jpg'.")
